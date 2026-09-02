@@ -3,11 +3,17 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing... nothing needed for this tiny app"
+      - echo "Installing dependencies..."
   build:
     commands:
-      - echo "Running the app now"
+      - echo "Testing application..."
       - python3 app.py
+  post_build:
+    commands:
+      - echo "Build completed successfully"
+
 artifacts:
   files:
     - app.py
+    - appspec.yml
+    - scripts/start.sh
