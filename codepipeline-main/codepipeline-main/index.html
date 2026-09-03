@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>codepipeline // deploy log</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0d1117;
+    --panel: #11161d;
+    --line: #232b35;
+    --text: #c9d1d9;
+    --dim: #6e7681;
+    --green: #3fb950;
+    --amber: #d29922;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 20% -10%, #14203044, transparent 45%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 32px 16px;
+  }
+
+  .window{
+    width:100%;
+    max-width: 640px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 30px 60px -30px #000c;
+    overflow:hidden;
+  }
+
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dot{ width:11px; height:11px; border-radius:50%; }
+  .dot.r{ background:#f85149; }
+  .dot.y{ background:#d29922; }
+  .dot.g{ background:#3fb950; }
+
+  .titlebar span{
+    margin-left: 10px;
+    color: var(--dim);
+    font-size: 12px;
+  }
+
+  .body{ padding: 26px 24px 30px; }
+
+  .line{
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    font-size: 13.5px;
+    line-height: 1.85;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: rise .35s ease forwards;
+  }
+
+  .line .icon{ color: var(--green); width: 16px; flex-shrink:0; }
+  .line .muted{ color: var(--dim); }
+  .line .path{ color: #79c0ff; }
+
+  .line:nth-child(1){ animation-delay: .05s; }
+  .line:nth-child(2){ animation-delay: .20s; }
+  .line:nth-child(3){ animation-delay: .35s; }
+  .line:nth-child(4){ animation-delay: .50s; }
+  .line:nth-child(5){ animation-delay: .65s; }
+
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  .rule{ border:none; border-top:1px solid var(--line); margin: 20px 0; }
+
+  h1{
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f0f6fc;
+    letter-spacing: -0.01em;
+    opacity:0;
+    animation: rise .4s ease forwards;
+    animation-delay: .85s;
+  }
+
+  p.sub{
+    margin: 0;
+    color: var(--dim);
+    font-size: 13px;
+    opacity:0;
+    animation: rise .4s ease forwards;
+    animation-delay: 1s;
+  }
+
+  .meta{
+    margin-top: 22px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    opacity:0;
+    animation: rise .4s ease forwards;
+    animation-delay: 1.15s;
+  }
+
+  .meta div{ font-size: 12px; color: var(--dim); }
+  .meta div b{ display:block; color: var(--text); font-weight: 500; font-size: 13px; margin-top:2px; }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: 1px solid #2ea04340;
+    background: #2ea04318;
+    color: var(--green);
+    border-radius: 20px;
+    font-size: 12px;
+    opacity:0;
+    animation: rise .4s ease forwards;
+    animation-delay: 1.3s;
+  }
+
+  .badge::before{
+    content:"";
+    width:6px; height:6px; border-radius:50%;
+    background: var(--green);
+    box-shadow: 0 0 0 3px #2ea04322;
+  }
+</style>
+</head>
+<body>
+
+  <div class="window">
+    <div class="titlebar">
+      <div class="dot r"></div>
+      <div class="dot y"></div>
+      <div class="dot g"></div>
+      <span>deploy.log</span>
+    </div>
+
+    <div class="body">
+      <div class="line"><span class="icon">✓</span><span>Source stage <span class="muted">— pulled latest commit from</span> <span class="path">github.com/jacksamson1503/codepipeline</span></span></div>
+      <div class="line"><span class="icon">✓</span><span>Build stage <span class="muted">— image built and pushed by</span> <span class="path">CodeBuild</span></span></div>
+      <div class="line"><span class="icon">✓</span><span>Deploy stage <span class="muted">— container installed by</span> <span class="path">CodeDeploy</span></span></div>
+      <div class="line"><span class="icon">✓</span><span>Health check <span class="muted">— container responding on</span> <span class="path">:5000</span></span></div>
+
+      <hr class="rule">
+
+      <h1>Pipeline deployed successfully.</h1>
+      <p class="sub">This page is served live from the container CodeDeploy just started.</p>
+
+      <div class="meta">
+        <div>Source<b>GitHub</b></div>
+        <div>Build<b>AWS CodeBuild</b></div>
+        <div>Deploy<b>AWS CodeDeploy</b></div>
+        <div>Runtime<b>Flask · Python 3.11</b></div>
+      </div>
+
+      <div class="badge">Live</div>
+    </div>
+  </div>
+
+</body>
+</html>
